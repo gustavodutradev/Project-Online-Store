@@ -12,7 +12,7 @@ export default class CarrinhoDeCompra extends Component {
 
   render() {
     return (
-      <Link to="/src/components/CarrinhoVazio.jsx">
+      <Link to="/carrinho">
         <div data-testid="shopping-cart-empty-message">
           <button type="submit">🛒</button>
         </div>
