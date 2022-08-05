@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+// import BotaoCarrinhoDeCompra from './BotaoCarrinhoDeCompra';
+import { Link } from 'react-router-dom';
 
 class Content extends Component {
   state = {
@@ -33,7 +35,10 @@ class Content extends Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
         )}
-
+        {/* <BotaoCarrinhoDeCompra /> */}
+        <Link data-testid="shopping-cart-button" to="/carrinho">
+          <button type="submit">🛒</button>
+        </Link>
       </div>
     );
   }

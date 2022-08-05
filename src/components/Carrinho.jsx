@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 
-export default class CarrinhoVazio extends Component {
+export default class Carrinho extends Component {
   render() {
     return (
-      <div>CarrinhoVazio</div>
+      <div>
+        <p data-testid="shopping-cart-empty-message">
+          Seu carrinho está vazio
+        </p>
+      </div>
     );
   }
 }
