@@ -4,6 +4,7 @@ import './App.css';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 import Carrinho from './components/Carrinho';
 import Content from './components/Content';
+import SideBar from './components/SideBar';
 
 class App extends React.Component {
   render() {
