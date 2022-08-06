@@ -16,7 +16,10 @@ class App extends React.Component {
             <button type="submit">🛒</button>
           </Link>
           <Switch>
-            <Route exact path="/" component={ Content } />
+            <Route exact path="/">
+              <Content />
+              <SideBar />
+            </Route>
             <Route exact path="/carrinho" component={ Carrinho } />
           </Switch>
         </div>
