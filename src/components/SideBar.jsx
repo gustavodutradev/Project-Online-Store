@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as api from '../services/api';
 
 class SideBar extends Component {
@@ -18,6 +19,7 @@ getCategoriesResponse = async () => {
 
 render() {
   const { categoriesList } = this.state;
+  const { setFilterCategory } = this.props;
   return (
     <div className="categories-container">
       {
@@ -27,6 +29,7 @@ render() {
             key={ category.id }
             type="button"
             data-testid="category"
+            onClick={ () => setFilterCategory(category.id) }
           >
             {' '}
             { category.name }
@@ -38,5 +41,9 @@ render() {
   );
 }
 }
+
+SideBar.propTypes = {
+  setFilterCategory: PropTypes.func.isRequired,
+};
 
 export default SideBar;
