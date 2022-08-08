@@ -2,13 +2,14 @@
 import React from 'react';
 import './App.css';
 // Logic Imports
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, BrowserRouter, Link } from 'react-router-dom';
 import * as api from './services/api';
 // Component Imports
 import Carrinho from './components/Carrinho';
 import Content from './components/Content';
 import SideBar from './components/SideBar';
 import Header from './components/Header';
+import Product from './components/Product';
 
 class App extends React.Component {
   state = {
@@ -16,6 +17,7 @@ class App extends React.Component {
     clickSearch: false,
     searchResult: [],
     filter: '',
+    resultsArray: [],
   }
 
   handleChange = ({ target }) => {
@@ -25,27 +27,37 @@ class App extends React.Component {
   }
 
   createProductCard = (product) => (
-    <div key={ product.id } data-testid="product">
-      <div>
-        <img
-          src={ product.thumbnail }
-          alt={ product.title }
-        />
+    <Link
+      to={ `/product/:${product.id}` }
+    >
+      <div
+        key={ product.id }
+        data-testid="product"
+      >
+        <div>
+          <img
+            src={ product.thumbnail }
+            alt={ product.title }
+          />
+        </div>
+        { product.title }
+        <br />
+        { product.price
+          .toLocaleString('pt-BR',
+            { style: 'currency',
+              currency: product.currency_id,
+              minimumFractionDigits: 2 }) }
       </div>
-      { product.title }
-      <br />
-      { product.price
-        .toLocaleString('pt-BR',
-          { style: 'currency',
-            currency: product.currency_id,
-            minimumFractionDigits: 2 }) }
-    </div>
+    </Link>
   )
 
   searchRequest = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
     const { results } = await request;
+    this.setState({
+      resultsArray: results,
+    });
 
     const arrayOfItens = results.map((product) => this.createProductCard(product));
 
@@ -69,7 +81,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { searchInput, searchResult, clickSearch, filter } = this.state;
+    const { searchInput, searchResult, clickSearch, filter, resultsArray } = this.state;
 
     return (
       <BrowserRouter>
@@ -95,6 +107,11 @@ class App extends React.Component {
               />
             </Route>
             <Route exact path="/carrinho" component={ Carrinho } />
+            <Route
+              exact
+              path="/product/:id"
+              render={ (props) => <Product { ...props } result={ resultsArray } /> }
+            />
           </Switch>
         </div>
       </BrowserRouter>
