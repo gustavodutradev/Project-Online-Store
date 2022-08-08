@@ -2,7 +2,7 @@
 import React from 'react';
 import './App.css';
 // Logic Imports
-import { Switch, Route, BrowserRouter, Link } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import * as api from './services/api';
 // Component Imports
 import Carrinho from './components/Carrinho';
@@ -15,9 +15,9 @@ class App extends React.Component {
   state = {
     searchInput: '',
     clickSearch: false,
-    searchResult: [],
-    filter: '',
-    resultsArray: [],
+    searchResult: {
+      results: [],
+    },
   }
 
   handleChange = ({ target }) => {
@@ -26,43 +26,12 @@ class App extends React.Component {
     });
   }
 
-  createProductCard = (product) => (
-    <Link
-      to={ `/product/:${product.id}` }
-    >
-      <div
-        key={ product.id }
-        data-testid="product"
-      >
-        <div>
-          <img
-            src={ product.thumbnail }
-            alt={ product.title }
-          />
-        </div>
-        { product.title }
-        <br />
-        { product.price
-          .toLocaleString('pt-BR',
-            { style: 'currency',
-              currency: product.currency_id,
-              minimumFractionDigits: 2 }) }
-      </div>
-    </Link>
-  )
-
   searchRequest = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
-    const { results } = await request;
-    this.setState({
-      resultsArray: results,
-    });
-
-    const arrayOfItens = results.map((product) => this.createProductCard(product));
 
     this.setState({
-      searchResult: arrayOfItens,
+      searchResult: request,
       clickSearch: true,
     });
   }
@@ -70,18 +39,15 @@ class App extends React.Component {
   setFilterCategory = async (categoryId) => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery(categoryId, searchInput);
-    const { results } = await request;
-
-    const arrayOfItens = results.map((product) => this.createProductCard(product));
 
     this.setState({
-      searchResult: arrayOfItens,
+      searchResult: request,
       clickSearch: true,
     });
   }
 
   render() {
-    const { searchInput, searchResult, clickSearch, filter, resultsArray } = this.state;
+    const { searchInput, searchResult, clickSearch } = this.state;
 
     return (
       <BrowserRouter>
@@ -91,6 +57,7 @@ class App extends React.Component {
           <Header
             handleChange={ this.handleChange }
             searchRequest={ this.searchRequest }
+            createProductCard={ this.createProductCard }
           />
         </div>
         <div className="page-body">
@@ -102,16 +69,11 @@ class App extends React.Component {
               <Content
                 searchInput={ searchInput }
                 searchResult={ searchResult }
-                filter={ filter }
                 clickSearch={ clickSearch }
               />
             </Route>
             <Route exact path="/carrinho" component={ Carrinho } />
-            <Route
-              exact
-              path="/product/:id"
-              render={ (props) => <Product { ...props } result={ resultsArray } /> }
-            />
+            <Route exact path="/product/:id" component={ Product } />
           </Switch>
         </div>
       </BrowserRouter>

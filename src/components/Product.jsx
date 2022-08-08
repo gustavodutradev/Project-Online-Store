@@ -1,46 +1,32 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 class Product extends Component {
   render() {
-    const { result, match } = this.props;
-    const { params: { id } } = match;
-    const object = result.filter((item) => `:${item.id}` === id);
-    const { title, thumbnail, price } = object[0];
+    const { location } = this.props;
+    const { state: { thisProd } } = location;
+
+    const { title, thumbnail, price } = thisProd;
 
     return (
-      <div data-testid="product-detail-link">
+      <div>
         <img
           src={ thumbnail }
           alt={ title }
           data-testid="product-detail-image"
         />
         <p data-testid="product-detail-name">{ title }</p>
-        <p data-testid="product-detail-price">{ price }</p>
-
-        <Link
-          to="/carrinho"
-        >
-          <button
-            type="button"
-            data-testid="shopping-cart-button"
-          >
-            🛒
-          </button>
-        </Link>
+        <p data-testid="product-detail-price">
+          { price }
+        </p>
       </div>
     );
   }
 }
 
 Product.propTypes = {
-  result: propTypes.string.isRequired,
-  match: propTypes.shape({
-    params: propTypes.shape({
-      id: propTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+  location: propTypes.instanceOf(Object).isRequired,
 };
 
 export default Product;
