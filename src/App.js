@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 // Main Imports
 import React from 'react';
 import './App.css';
@@ -15,7 +16,8 @@ class App extends React.Component {
     searchInput: '',
     clickSearch: false,
     searchResult: [],
-    filter: '',
+    cartList: [],
+    resultsArray: [],
   }
 
   handleChange = ({ target }) => {
@@ -39,13 +41,33 @@ class App extends React.Component {
           { style: 'currency',
             currency: product.currency_id,
             minimumFractionDigits: 2 }) }
+      <br />
+      <button
+        id={ product.id }
+        type="button"
+        data-testid="product-add-to-cart"
+        onClick={ this.addToCart }
+      >
+        🛒
+      </button>
     </div>
   )
+
+  addToCart = ({ target }) => {
+    const { resultsArray, cartList } = this.state;
+    const productAddedToCart = resultsArray
+      .filter((productItem) => productItem.id === target.id);
+    this.setState({ cartList: [...cartList, ...productAddedToCart] });
+    console.log(resultsArray);
+  }
 
   searchRequest = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
     const { results } = await request;
+    this.setState({
+      resultsArray: results,
+    });
 
     const arrayOfItens = results.map((product) => this.createProductCard(product));
 
@@ -69,7 +91,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { searchInput, searchResult, clickSearch, filter } = this.state;
+    const { searchInput, searchResult, clickSearch, filter, cartList } = this.state;
 
     return (
       <BrowserRouter>
@@ -94,7 +116,11 @@ class App extends React.Component {
                 clickSearch={ clickSearch }
               />
             </Route>
-            <Route exact path="/carrinho" component={ Carrinho } />
+            <Route exact path="/carrinho">
+              <Carrinho
+                cartList={ cartList }
+              />
+            </Route>
           </Switch>
         </div>
       </BrowserRouter>
