@@ -7,41 +7,51 @@ import { Link } from 'react-router-dom';
 class Content extends Component {
   findThisProd = (id) => {
     const { searchResult: { results } } = this.props;
-    console.log(id);
     const object = results.find((item) => item.id === id);
     return object;
   }
 
-  createProductCard = (product) => (
-    <div
-      data-testid="product"
-      key={ product.id }
-    >
-      <Link
-        to={ {
-          pathname: `/product/${product.id}`,
-          state: {
-            thisProd: this.findThisProd(product.id),
-          },
-        } }
-        data-testid="product-detail-link"
+  createProductCard = (product) => {
+    const { addToCart } = this.props;
+    return (
+      <div
+        data-testid="product"
+        key={ product.id }
       >
-        <div>
-          <img
-            src={ product.thumbnail }
-            alt={ product.title }
-          />
-        </div>
-        { product.title }
-        <br />
-        { product.price
-          .toLocaleString('pt-BR',
-            { style: 'currency',
-              currency: product.currency_id,
-              minimumFractionDigits: 2 }) }
-      </Link>
-    </div>
-  );
+        <Link
+          to={ {
+            pathname: `/product/${product.id}`,
+            state: {
+              thisProd: this.findThisProd(product.id),
+            },
+          } }
+          data-testid="product-detail-link"
+        >
+          <div>
+            <img
+              src={ product.thumbnail }
+              alt={ product.title }
+            />
+          </div>
+          { product.title }
+          <br />
+          { product.price
+            .toLocaleString('pt-BR',
+              { style: 'currency',
+                currency: product.currency_id,
+                minimumFractionDigits: 2 }) }
+        </Link>
+        <button
+          id={ product.id }
+          type="button"
+          data-testid="product-add-to-cart"
+          onClick={ addToCart }
+        >
+          🛒
+        </button>
+      </div>
+    );
+  }
 
   render() {
     // Props Import
@@ -74,6 +84,7 @@ Content.propTypes = {
   searchInput: PropTypes.string.isRequired,
   searchResult: PropTypes.instanceOf(Object).isRequired,
   clickSearch: PropTypes.bool.isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
 
 export default Content;

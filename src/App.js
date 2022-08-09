@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 // Main Imports
 import React from 'react';
 import './App.css';
@@ -18,12 +19,21 @@ class App extends React.Component {
     searchResult: {
       results: [],
     },
+    cartList: [],
   }
 
   handleChange = ({ target }) => {
     this.setState({
       searchInput: target.value,
     });
+  }
+
+  addToCart = ({ target }) => {
+    const { searchResult, cartList } = this.state;
+    const { results } = searchResult;
+    const productAddedToCart = results
+      .filter((productItem) => productItem.id === target.id);
+    this.setState({ cartList: [...cartList, ...productAddedToCart] });
   }
 
   searchRequest = async () => {
@@ -47,7 +57,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { searchInput, searchResult, clickSearch } = this.state;
+    const { searchInput, searchResult, clickSearch, cartList } = this.state;
 
     return (
       <BrowserRouter>
@@ -70,6 +80,12 @@ class App extends React.Component {
                 searchInput={ searchInput }
                 searchResult={ searchResult }
                 clickSearch={ clickSearch }
+                addToCart={ this.addToCart }
+              />
+            </Route>
+            <Route exact path="/carrinho">
+              <Carrinho
+                cartList={ cartList }
               />
             </Route>
             <Route exact path="/carrinho" component={ Carrinho } />
