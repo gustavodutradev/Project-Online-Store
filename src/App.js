@@ -134,7 +134,7 @@ class App extends React.Component {
           <Header
             handleChange={ this.handleChange }
             searchRequest={ this.searchRequest }
-            createProductCard={ this.createProductCard }
+            cartList={ cartList }
           />
         </div>
         <div className="page-body">
