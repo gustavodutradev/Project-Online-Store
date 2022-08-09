@@ -10,6 +10,7 @@ import Carrinho from './components/Carrinho';
 import Content from './components/Content';
 import SideBar from './components/SideBar';
 import Header from './components/Header';
+import Product from './components/Product';
 
 class App extends React.Component {
   state = {
@@ -56,7 +57,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { searchInput, searchResult, clickSearch, filter, cartList } = this.state;
+    const { searchInput, searchResult, clickSearch, cartList } = this.state;
 
     return (
       <BrowserRouter>
@@ -66,6 +67,7 @@ class App extends React.Component {
           <Header
             handleChange={ this.handleChange }
             searchRequest={ this.searchRequest }
+            createProductCard={ this.createProductCard }
           />
         </div>
         <div className="page-body">
@@ -77,7 +79,6 @@ class App extends React.Component {
               <Content
                 searchInput={ searchInput }
                 searchResult={ searchResult }
-                filter={ filter }
                 clickSearch={ clickSearch }
                 addToCart={ this.addToCart }
               />
@@ -87,6 +88,8 @@ class App extends React.Component {
                 cartList={ cartList }
               />
             </Route>
+            <Route exact path="/carrinho" component={ Carrinho } />
+            <Route exact path="/product/:id" component={ Product } />
           </Switch>
         </div>
       </BrowserRouter>
