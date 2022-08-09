@@ -13,6 +13,9 @@ class Content extends Component {
 
   createProductCard = (product) => {
     const { addToCart } = this.props;
+    const { shipping } = product;
+    const { free_shipping: freeShipping } = shipping;
+    console.log(freeShipping);
     return (
       <div
         data-testid="product"
@@ -40,7 +43,9 @@ class Content extends Component {
               { style: 'currency',
                 currency: product.currency_id,
                 minimumFractionDigits: 2 }) }
+          <br />
         </Link>
+        { freeShipping && (<span data-testid="free-shipping">FRETE GRÁTIS</span>) }
         <button
           id={ product.id }
           type="button"
