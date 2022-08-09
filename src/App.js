@@ -9,13 +9,15 @@ import Carrinho from './components/Carrinho';
 import Content from './components/Content';
 import SideBar from './components/SideBar';
 import Header from './components/Header';
+import Product from './components/Product';
 
 class App extends React.Component {
   state = {
     searchInput: '',
     clickSearch: false,
-    searchResult: [],
-    filter: '',
+    searchResult: {
+      results: [],
+    },
   }
 
   handleChange = ({ target }) => {
@@ -24,33 +26,12 @@ class App extends React.Component {
     });
   }
 
-  createProductCard = (product) => (
-    <div key={ product.id } data-testid="product">
-      <div>
-        <img
-          src={ product.thumbnail }
-          alt={ product.title }
-        />
-      </div>
-      { product.title }
-      <br />
-      { product.price
-        .toLocaleString('pt-BR',
-          { style: 'currency',
-            currency: product.currency_id,
-            minimumFractionDigits: 2 }) }
-    </div>
-  )
-
   searchRequest = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
-    const { results } = await request;
-
-    const arrayOfItens = results.map((product) => this.createProductCard(product));
 
     this.setState({
-      searchResult: arrayOfItens,
+      searchResult: request,
       clickSearch: true,
     });
   }
@@ -58,18 +39,15 @@ class App extends React.Component {
   setFilterCategory = async (categoryId) => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery(categoryId, searchInput);
-    const { results } = await request;
-
-    const arrayOfItens = results.map((product) => this.createProductCard(product));
 
     this.setState({
-      searchResult: arrayOfItens,
+      searchResult: request,
       clickSearch: true,
     });
   }
 
   render() {
-    const { searchInput, searchResult, clickSearch, filter } = this.state;
+    const { searchInput, searchResult, clickSearch } = this.state;
 
     return (
       <BrowserRouter>
@@ -79,6 +57,7 @@ class App extends React.Component {
           <Header
             handleChange={ this.handleChange }
             searchRequest={ this.searchRequest }
+            createProductCard={ this.createProductCard }
           />
         </div>
         <div className="page-body">
@@ -90,11 +69,11 @@ class App extends React.Component {
               <Content
                 searchInput={ searchInput }
                 searchResult={ searchResult }
-                filter={ filter }
                 clickSearch={ clickSearch }
               />
             </Route>
             <Route exact path="/carrinho" component={ Carrinho } />
+            <Route exact path="/product/:id" component={ Product } />
           </Switch>
         </div>
       </BrowserRouter>
