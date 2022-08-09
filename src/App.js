@@ -36,6 +36,11 @@ class App extends React.Component {
     this.setState({ cartList: [...cartList, ...productAddedToCart] });
   }
 
+  addToCartDetails = (product) => {
+    const { cartList } = this.state;
+    this.setState({ cartList: [...cartList, product] });
+  }
+
   searchRequest = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
@@ -89,7 +94,14 @@ class App extends React.Component {
               />
             </Route>
             <Route exact path="/carrinho" component={ Carrinho } />
-            <Route exact path="/product/:id" component={ Product } />
+            <Route
+              exact
+              path="/product/:id"
+              render={ (props) => (<Product
+                { ...props }
+                addToCartDetails={ this.addToCartDetails }
+              />) }
+            />
           </Switch>
         </div>
       </BrowserRouter>

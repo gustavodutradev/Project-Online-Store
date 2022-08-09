@@ -4,10 +4,10 @@ import propTypes from 'prop-types';
 
 class Product extends Component {
   render() {
-    const { location } = this.props;
+    const { location, addToCartDetails } = this.props;
     const { state: { thisProd } } = location;
 
-    const { title, thumbnail, price } = thisProd;
+    const { title, thumbnail, price, id } = thisProd;
 
     return (
       <div>
@@ -20,6 +20,14 @@ class Product extends Component {
         <p data-testid="product-detail-price">
           { price }
         </p>
+        <button
+          id={ id }
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => addToCartDetails(thisProd) }
+        >
+          🛒
+        </button>
       </div>
     );
   }
@@ -27,6 +35,7 @@ class Product extends Component {
 
 Product.propTypes = {
   location: propTypes.instanceOf(Object).isRequired,
+  addToCartDetails: propTypes.func.isRequired,
 };
 
 export default Product;
