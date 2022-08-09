@@ -3,7 +3,7 @@
 import React from 'react';
 import './App.css';
 // Logic Imports
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, BrowserRouter, Link } from 'react-router-dom';
 import * as api from './services/api';
 // Component Imports
 import Carrinho from './components/Carrinho';
@@ -19,7 +19,7 @@ class App extends React.Component {
     searchResult: {
       results: [],
     },
-    cartList: [],
+    cartList: JSON.parse(localStorage.getItem('cart')) || [],
   }
 
   handleChange = ({ target }) => {
@@ -28,17 +28,69 @@ class App extends React.Component {
     });
   }
 
-  addToCart = ({ target }) => {
+  updateStorage = () => {
+    const { cartList } = this.state;
+    localStorage.setItem('cart', JSON.stringify(cartList));
+  }
+
+  addToCart = (id) => {
     const { searchResult, cartList } = this.state;
     const { results } = searchResult;
     const productAddedToCart = results
-      .filter((productItem) => productItem.id === target.id);
-    this.setState({ cartList: [...cartList, ...productAddedToCart] });
+      .filter((productItem) => productItem.id === id);
+    this.setState({ cartList: [...cartList, ...productAddedToCart] }, () => {
+      this.updateStorage();
+    });
   }
 
   addToCartDetails = (product) => {
     const { cartList } = this.state;
-    this.setState({ cartList: [...cartList, product] });
+    this.setState({ cartList: [...cartList, product] }, () => {
+      this.updateStorage();
+    });
+  }
+
+  updateCartQuantity = (id, numb, obj) => {
+    const { cartList } = this.state;
+
+    // Checa quantos itens tem no carrinho
+    const thisProdList = cartList.filter((each) => each.id === id);
+
+    // Pega um dos itens do carrinho
+    const indexOfProd = cartList.lastIndexOf(obj);
+
+    // IF para reduzir
+    if (numb < 0 && thisProdList.length > 1) {
+      const newArray = cartList.filter((_each, index) => index !== indexOfProd);
+      this.setState({
+        cartList: newArray,
+      });
+      return;
+    }
+
+    // IF para aumentar
+    if (numb > 0) {
+      this.setState({ cartList: [...cartList, cartList[indexOfProd]] });
+    }
+  }
+
+  removeProduct = (id) => {
+    const { cartList } = this.state;
+
+    // Pegar todos os itens que não são o removido
+    const newProdList = cartList.filter((each) => each.id !== id);
+
+    this.setState({
+      cartList: newProdList,
+    }, () => {
+      this.updateStorage();
+    });
+  }
+
+  getCartItemQuantity = (id) => {
+    const { cartList } = this.state;
+    const thisProdList = cartList.filter((each) => each.id === id);
+    return thisProdList.length;
   }
 
   searchRequest = async () => {
@@ -66,7 +118,10 @@ class App extends React.Component {
 
     return (
       <BrowserRouter>
-        <h1>Front-end Online Store</h1>
+        <Link to="/">
+          <h1>Front-end Online Store</h1>
+        </Link>
+
         <div className="header">
 
           <Header
@@ -88,12 +143,17 @@ class App extends React.Component {
                 addToCart={ this.addToCart }
               />
             </Route>
-            <Route exact path="/carrinho">
-              <Carrinho
+            <Route
+              exact
+              path="/carrinho"
+              render={ (props) => (<Carrinho
+                { ...props }
                 cartList={ cartList }
-              />
-            </Route>
-            <Route exact path="/carrinho" component={ Carrinho } />
+                updateCartQuantity={ this.updateCartQuantity }
+                getCartItemQuantity={ this.getCartItemQuantity }
+                removeProduct={ this.removeProduct }
+              />) }
+            />
             <Route
               exact
               path="/product/:id"

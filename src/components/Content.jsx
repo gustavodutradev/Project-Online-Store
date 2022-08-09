@@ -45,7 +45,7 @@ class Content extends Component {
           id={ product.id }
           type="button"
           data-testid="product-add-to-cart"
-          onClick={ addToCart }
+          onClick={ () => addToCart(product.id) }
         >
           🛒
         </button>
