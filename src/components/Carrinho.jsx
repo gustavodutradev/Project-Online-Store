@@ -1,20 +1,41 @@
-/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class Carrinho extends Component {
-  render() {
+  checkDuplicated = () => {
     const { cartList } = this.props;
-    const quantity = cartList.length;
+
+    const itemsToShow = [];
+
+    cartList.filter((each) => {
+      const duplicated = itemsToShow.some((item) => item.id === each.id);
+
+      if (!duplicated) {
+        itemsToShow.push(each);
+        return true;
+      }
+      return false;
+    });
+
+    return itemsToShow;
+  }
+
+  render() {
+    const { cartList,
+      updateCartQuantity,
+      getCartItemQuantity,
+      removeProduct } = this.props;
+    const DECREASE = -1;
+    const INCREASE = 1;
+
+    const itemsToShow = this.checkDuplicated();
+
     return (
       <div>
         { cartList.length > 0 ? (
           <div>
-            <p data-testid="shopping-cart-product-quantity">
-              {` A quantidade de produtos é: ${quantity} `}
-            </p>
-            { cartList.map((cartItem) => {
-              const { thumbnail, price, title } = cartItem;
+            { itemsToShow.map((cartItem) => {
+              const { thumbnail, price, title, id } = cartItem;
               return (
                 <div key={ cartItem.id }>
                   <p data-testid="shopping-cart-product-name">{ title }</p>
@@ -25,6 +46,32 @@ export default class Carrinho extends Component {
                         currency: cartItem.currency_id,
                         minimumFractionDigits: 2 }) }
                   </p>
+                  <button
+                    type="button"
+                    onClick={ () => updateCartQuantity(id, DECREASE, cartItem) }
+                    data-testid="product-decrease-quantity"
+                  >
+                    -
+                  </button>
+                  <span data-testid="shopping-cart-product-quantity">
+                    { getCartItemQuantity(id) }
+                  </span>
+                  <button
+                    type="button"
+                    onClick={ () => updateCartQuantity(id, INCREASE, cartItem) }
+                    data-testid="product-increase-quantity"
+                  >
+                    +
+                  </button>
+                  <div>
+                    <button
+                      type="button"
+                      data-testid="remove-product"
+                      onClick={ () => removeProduct(id) }
+                    >
+                      X
+                    </button>
+                  </div>
                 </div>
               );
             })}
@@ -43,4 +90,7 @@ export default class Carrinho extends Component {
 
 Carrinho.propTypes = {
   cartList: PropTypes.instanceOf(Array).isRequired,
+  updateCartQuantity: PropTypes.func.isRequired,
+  getCartItemQuantity: PropTypes.func.isRequired,
+  removeProduct: PropTypes.func.isRequired,
 };
