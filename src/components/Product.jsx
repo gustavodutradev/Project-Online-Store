@@ -84,7 +84,7 @@ class Product extends Component {
   }
 
   render() {
-    const { evaluations, email, grade, details, displayError } = this.state;
+    const { evaluations, email, details, displayError } = this.state;
 
     const { location, addToCartDetails } = this.props;
     const { state: { thisProd } } = location;
