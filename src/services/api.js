@@ -5,7 +5,7 @@ export async function getCategories() {
     const result = await request.json();
     return result;
   } catch (e) {
-    return e.message;
+    console.log(e.message);
   }
 }
 
@@ -23,6 +23,6 @@ export async function getProductsFromCategoryAndQuery(categoryId, query) {
     const result = await request.json();
     return result;
   } catch (e) {
-    return e.message;
+    console.log(e.message);
   }
 }

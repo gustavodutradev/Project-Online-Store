@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 class Header extends Component {
   render() {
-    const { handleChange, searchRequest } = this.props;
+    const { handleChange, searchRequest, cartList } = this.props;
 
     return (
       <div className="header-bar">
@@ -26,7 +26,8 @@ class Header extends Component {
           Buscar
         </button>
         <Link data-testid="shopping-cart-button" to="/carrinho">
-          <button type="submit">🛒</button>
+          <span data-testid="shopping-cart-size">{cartList.length}</span>
+          <button type="button">🛒</button>
         </Link>
       </div>
     );
@@ -36,6 +37,7 @@ class Header extends Component {
 Header.propTypes = {
   handleChange: PropTypes.func.isRequired,
   searchRequest: PropTypes.func.isRequired,
+  cartList: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default Header;
