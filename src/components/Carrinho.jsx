@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default class Carrinho extends Component {
   checkDuplicated = () => {
@@ -75,6 +76,19 @@ export default class Carrinho extends Component {
                 </div>
               );
             })}
+            <div>
+              <br />
+              <Link
+                to="/checkout"
+              >
+                <button
+                  data-testid="checkout-products"
+                  type="button"
+                >
+                  Checkout
+                </button>
+              </Link>
+            </div>
           </div>
         ) : (
           <div>
