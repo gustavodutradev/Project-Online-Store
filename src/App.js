@@ -15,9 +15,10 @@ class App extends React.Component {
   state = {
     searchInput: '',
     clickSearch: false,
-    searchResult: [],
+    searchResult: {
+      results: [],
+    },
     cartList: [],
-    resultsArray: [],
   }
 
   handleChange = ({ target }) => {
@@ -26,53 +27,20 @@ class App extends React.Component {
     });
   }
 
-  createProductCard = (product) => (
-    <div key={ product.id } data-testid="product">
-      <div>
-        <img
-          src={ product.thumbnail }
-          alt={ product.title }
-        />
-      </div>
-      { product.title }
-      <br />
-      { product.price
-        .toLocaleString('pt-BR',
-          { style: 'currency',
-            currency: product.currency_id,
-            minimumFractionDigits: 2 }) }
-      <br />
-      <button
-        id={ product.id }
-        type="button"
-        data-testid="product-add-to-cart"
-        onClick={ this.addToCart }
-      >
-        🛒
-      </button>
-    </div>
-  )
-
   addToCart = ({ target }) => {
-    const { resultsArray, cartList } = this.state;
-    const productAddedToCart = resultsArray
+    const { searchResult, cartList } = this.state;
+    const { results } = searchResult;
+    const productAddedToCart = results
       .filter((productItem) => productItem.id === target.id);
     this.setState({ cartList: [...cartList, ...productAddedToCart] });
-    console.log(resultsArray);
   }
 
   searchRequest = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
-    const { results } = await request;
-    this.setState({
-      resultsArray: results,
-    });
-
-    const arrayOfItens = results.map((product) => this.createProductCard(product));
 
     this.setState({
-      searchResult: arrayOfItens,
+      searchResult: request,
       clickSearch: true,
     });
   }
@@ -80,12 +48,9 @@ class App extends React.Component {
   setFilterCategory = async (categoryId) => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery(categoryId, searchInput);
-    const { results } = await request;
-
-    const arrayOfItens = results.map((product) => this.createProductCard(product));
 
     this.setState({
-      searchResult: arrayOfItens,
+      searchResult: request,
       clickSearch: true,
     });
   }
@@ -114,6 +79,7 @@ class App extends React.Component {
                 searchResult={ searchResult }
                 filter={ filter }
                 clickSearch={ clickSearch }
+                addToCart={ this.addToCart }
               />
             </Route>
             <Route exact path="/carrinho">

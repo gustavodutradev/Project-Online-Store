@@ -6,6 +6,7 @@ export default class Carrinho extends Component {
   render() {
     const { cartList } = this.props;
     const quantity = cartList.length;
+    console.log(cartList);
     return (
       <div>
         { cartList.length > 0 ? (
@@ -42,9 +43,5 @@ export default class Carrinho extends Component {
 }
 
 Carrinho.propTypes = {
-  cartList: PropTypes.shape({
-    thumbnail: PropTypes.string,
-    title: PropTypes.string,
-    price: PropTypes.number,
-  }).isRequired,
+  cartList: PropTypes.instanceOf(Array).isRequired,
 };
