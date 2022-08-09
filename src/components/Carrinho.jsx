@@ -6,7 +6,6 @@ export default class Carrinho extends Component {
   render() {
     const { cartList } = this.props;
     const quantity = cartList.length;
-    console.log(cartList);
     return (
       <div>
         { cartList.length > 0 ? (
