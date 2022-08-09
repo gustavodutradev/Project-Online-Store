@@ -11,6 +11,7 @@ import Content from './components/Content';
 import SideBar from './components/SideBar';
 import Header from './components/Header';
 import Product from './components/Product';
+import Checkout from './components/Checkout';
 
 class App extends React.Component {
   state = {
@@ -93,6 +94,12 @@ class App extends React.Component {
     return thisProdList.length;
   }
 
+  clearCart = () => {
+    this.setState({ cartList: [] }, () => {
+      this.updateStorage();
+    });
+  }
+
   searchRequest = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
@@ -161,6 +168,17 @@ class App extends React.Component {
                 { ...props }
                 addToCartDetails={ this.addToCartDetails }
               />) }
+            />
+            <Route
+              exact
+              path="/checkout"
+              render={ (props) => (
+                <Checkout
+                  { ...props }
+                  getCartItemQuantity={ this.getCartItemQuantity }
+                  clearCart={ this.clearCart }
+                />
+              ) }
             />
           </Switch>
         </div>
