@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-max-depth */
+/* eslint-disable react/no-unused-state */
 // Main Imports
 import React from 'react';
 // Logic Imports
@@ -14,6 +14,7 @@ import Checkout from './components/Checkout';
 // CSS Import
 import './css/App.css';
 import './css/Header.css';
+import './css/Content.css';
 // Icons Imports
 
 class App extends React.Component {
