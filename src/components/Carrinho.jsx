@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -36,7 +35,8 @@ export default class Carrinho extends Component {
         { cartList.length > 0 ? (
           <div>
             { itemsToShow.map((cartItem) => {
-              const { thumbnail, price, title, id, available_quantity } = cartItem;
+              const { thumbnail, price, title, id } = cartItem;
+              const stock = cartItem.available_quantity;
               return (
                 <div key={ cartItem.id }>
                   <p data-testid="shopping-cart-product-name">{ title }</p>
@@ -55,8 +55,8 @@ export default class Carrinho extends Component {
                     -
                   </button>
                   <span data-testid="shopping-cart-product-quantity">
-                    { (getCartItemQuantity(id) > available_quantity ? (
-                      available_quantity
+                    { (getCartItemQuantity(id) > stock ? (
+                      stock
                     ) : (
                       getCartItemQuantity(id)
                     ))}
