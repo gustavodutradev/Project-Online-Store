@@ -59,6 +59,7 @@ class App extends React.Component {
 
     // Pega um dos itens do carrinho
     const indexOfProd = cartList.lastIndexOf(obj);
+    console.log(indexOfProd);
 
     // IF para reduzir
     if (numb < 0 && thisProdList.length > 1) {
@@ -99,6 +100,12 @@ class App extends React.Component {
       this.updateStorage();
     });
   }
+
+  // setStockMaxQuantity = () => {
+  //   const { cartList } = this.state;
+  //   const { available_quantity } = cartList;
+  //   if(qtd produto > que qtd estoque)
+  // }
 
   searchRequest = async () => {
     const { searchInput } = this.state;

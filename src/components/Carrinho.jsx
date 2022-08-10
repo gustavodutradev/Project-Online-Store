@@ -28,7 +28,6 @@ export default class Carrinho extends Component {
       removeProduct } = this.props;
     const DECREASE = -1;
     const INCREASE = 1;
-
     const itemsToShow = this.checkDuplicated();
 
     return (
@@ -37,6 +36,7 @@ export default class Carrinho extends Component {
           <div>
             { itemsToShow.map((cartItem) => {
               const { thumbnail, price, title, id } = cartItem;
+              const stock = cartItem.available_quantity;
               return (
                 <div key={ cartItem.id }>
                   <p data-testid="shopping-cart-product-name">{ title }</p>
@@ -55,7 +55,11 @@ export default class Carrinho extends Component {
                     -
                   </button>
                   <span data-testid="shopping-cart-product-quantity">
-                    { getCartItemQuantity(id) }
+                    { (getCartItemQuantity(id) > stock ? (
+                      stock
+                    ) : (
+                      getCartItemQuantity(id)
+                    ))}
                   </span>
                   <button
                     type="button"
