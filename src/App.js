@@ -1,9 +1,8 @@
-/* eslint-disable react/no-unused-state */
+/* eslint-disable react/jsx-max-depth */
 // Main Imports
 import React from 'react';
-import './App.css';
 // Logic Imports
-import { Switch, Route, BrowserRouter, Link } from 'react-router-dom';
+import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import * as api from './services/api';
 // Component Imports
 import Carrinho from './components/Carrinho';
@@ -12,6 +11,10 @@ import SideBar from './components/SideBar';
 import Header from './components/Header';
 import Product from './components/Product';
 import Checkout from './components/Checkout';
+// CSS Import
+import './css/App.css';
+import './css/Header.css';
+// Icons Imports
 
 class App extends React.Component {
   state = {
@@ -21,6 +24,7 @@ class App extends React.Component {
       results: [],
     },
     cartList: JSON.parse(localStorage.getItem('cart')) || [],
+    redirect: false,
   }
 
   handleChange = ({ target }) => {
@@ -101,12 +105,6 @@ class App extends React.Component {
     });
   }
 
-  // setStockMaxQuantity = () => {
-  //   const { cartList } = this.state;
-  //   const { available_quantity } = cartList;
-  //   if(qtd produto > que qtd estoque)
-  // }
-
   searchRequest = async () => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery('', searchInput);
@@ -115,6 +113,23 @@ class App extends React.Component {
       searchResult: request,
       clickSearch: true,
     });
+  }
+
+  searchRequestEnter = async (event) => {
+    if (event.key === 'Enter') {
+      this.setState({
+        redirect: false,
+      }, async () => {
+        const { searchInput } = this.state;
+        const request = await api.getProductsFromCategoryAndQuery('', searchInput);
+
+        this.setState({
+          searchResult: request,
+          clickSearch: true,
+          redirect: true,
+        });
+      });
+    }
   }
 
   setFilterCategory = async (categoryId) => {
@@ -128,21 +143,18 @@ class App extends React.Component {
   }
 
   render() {
-    const { searchInput, searchResult, clickSearch, cartList } = this.state;
+    const { searchInput, searchResult, clickSearch, cartList, redirect } = this.state;
 
     return (
       <BrowserRouter>
-        <Link to="/">
-          <h1>Front-end Online Store</h1>
-        </Link>
-
-        <div className="header">
-
+        <div>
           <Header
             handleChange={ this.handleChange }
             searchRequest={ this.searchRequest }
+            searchRequestEnter={ this.searchRequestEnter }
             cartList={ cartList }
           />
+          { redirect && <Redirect to="/" /> }
         </div>
         <div className="page-body">
           <Switch>
