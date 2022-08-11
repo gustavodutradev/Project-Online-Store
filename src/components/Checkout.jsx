@@ -67,7 +67,7 @@ export default class Checkout extends Component {
     render() {
       const itemsToShow = this.checkDuplicated();
       const { validateFields } = this.state;
-      const { getCartItemQuantity } = this.props;
+      const { getCartItemQuantity, totalPrice } = this.props;
       return (
         <form>
           <br />
@@ -84,15 +84,28 @@ export default class Checkout extends Component {
                       src={ thumbnail }
                       alt={ title }
                     />
-                    <span>{ price }</span>
+                    <span>
+                      { price.toLocaleString('pt-BR',
+                        { style: 'currency',
+                          currency: 'brl',
+                          minimumFractionDigits: 2 }) }
+
+                    </span>
                     <br />
-                    <span>{ getCartItemQuantity(id) }</span>
+                    <span>
+                      Quantidade:
+                      { getCartItemQuantity(id) }
+                    </span>
                   </section>
                 );
               })}
             </section>
             <section>
-              Total
+              Total:
+              { totalPrice().toLocaleString('pt-BR',
+                { style: 'currency',
+                  currency: 'brl',
+                  minimumFractionDigits: 2 }) }
             </section>
           </fieldset>
           <fieldset>
@@ -220,5 +233,6 @@ export default class Checkout extends Component {
 Checkout.propTypes = {
   getCartItemQuantity: PropTypes.func.isRequired,
   clearCart: PropTypes.func.isRequired,
+  totalPrice: PropTypes.func.isRequired,
   history: PropTypes.instanceOf(Object).isRequired,
 };

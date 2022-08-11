@@ -17,6 +17,7 @@ import './css/Header.css';
 import './css/Content.css';
 import './css/Navbar.css';
 import './css/Product.css';
+import './css/Carrinho.css';
 // Icons Imports
 
 class App extends React.Component {
@@ -135,6 +136,15 @@ class App extends React.Component {
     }
   }
 
+  totalPrice = () => {
+    const { cartList } = this.state;
+    const pricesArray = cartList.map((cartItem) => {
+      const { price } = cartItem;
+      return price;
+    });
+    return pricesArray.reduce((acc, curr) => acc + curr, 0);
+  }
+
   setFilterCategory = async (categoryId) => {
     const { searchInput } = this.state;
     const request = await api.getProductsFromCategoryAndQuery(categoryId, searchInput);
@@ -181,6 +191,7 @@ class App extends React.Component {
                 updateCartQuantity={ this.updateCartQuantity }
                 getCartItemQuantity={ this.getCartItemQuantity }
                 removeProduct={ this.removeProduct }
+                totalPrice={ this.totalPrice }
               />) }
             />
             <Route
@@ -199,6 +210,7 @@ class App extends React.Component {
                   { ...props }
                   getCartItemQuantity={ this.getCartItemQuantity }
                   clearCart={ this.clearCart }
+                  totalPrice={ this.totalPrice }
                 />
               ) }
             />
