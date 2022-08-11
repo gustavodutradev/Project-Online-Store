@@ -18,7 +18,6 @@ class Content extends Component {
     const { addToCart } = this.props;
     const { shipping } = product;
     const { free_shipping: freeShipping } = shipping;
-    console.log(freeShipping);
     return (
       <div
         data-testid="product"
@@ -82,15 +81,14 @@ class Content extends Component {
 
   render() {
     // Props Import
-    const { searchInput, searchResult, clickSearch } = this.props;
+    const { searchResult, clickSearch } = this.props;
     const { results } = searchResult;
 
     const arrayOfItens = results
       .map((product) => this.createProductCard(product));
 
     // Input Checker
-    const searchMinLimit = 0;
-    const searchRule = searchInput.length > searchMinLimit;
+    const searchRule = clickSearch;
 
     return (
       <div className="search-results">
@@ -108,7 +106,6 @@ class Content extends Component {
 }
 
 Content.propTypes = {
-  searchInput: PropTypes.string.isRequired,
   searchResult: PropTypes.instanceOf(Object).isRequired,
   clickSearch: PropTypes.bool.isRequired,
   addToCart: PropTypes.func.isRequired,

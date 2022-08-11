@@ -7,7 +7,7 @@ import * as api from './services/api';
 // Component Imports
 import Carrinho from './components/Carrinho';
 import Content from './components/Content';
-import SideBar from './components/SideBar';
+import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Product from './components/Product';
 import Checkout from './components/Checkout';
@@ -15,6 +15,7 @@ import Checkout from './components/Checkout';
 import './css/App.css';
 import './css/Header.css';
 import './css/Content.css';
+import './css/Navbar.css';
 // Icons Imports
 
 class App extends React.Component {
@@ -160,7 +161,7 @@ class App extends React.Component {
         <div className="page-body">
           <Switch>
             <Route exact path="/">
-              <SideBar
+              <Navbar
                 setFilterCategory={ this.setFilterCategory }
               />
               <Content
