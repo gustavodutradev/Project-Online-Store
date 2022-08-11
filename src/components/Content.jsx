@@ -1,3 +1,5 @@
+/* eslint-disable no-magic-numbers */
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-max-depth */
 /* eslint-disable no-unused-vars */
 // Main Imports
@@ -23,67 +25,56 @@ class Content extends Component {
         key={ product.id }
       >
         <div
-          className="product-container"
+          className="product-card"
         >
-          <div
-            className="product-card"
+          <Link
+            to={ {
+              pathname: `/product/${product.id}`,
+              state: {
+                thisProd: this.findThisProd(product.id),
+              },
+            } }
+            data-testid="product-detail-link"
           >
-
-            <Link
-              to={ {
-                pathname: `/product/${product.id}`,
-                state: {
-                  thisProd: this.findThisProd(product.id),
-                },
-              } }
-              data-testid="product-detail-link"
-            >
-              <div>
-                <img
-                  src={ product.thumbnail }
-                  alt={ product.title }
-                />
-              </div>
-              <div
-                className="product-info"
-              >
-                <h4
-                  className="price"
-                >
-                  { product.price
-                    .toLocaleString('pt-BR',
-                      { style: 'currency',
-                        currency: product.currency_id,
-                        minimumFractionDigits: 2 }) }
-                </h4>
-                <br />
-                <div
-                  className="product-title"
-                >
-                  { product.title }
-
-                </div>
-                <br />
-
-              </div>
-            </Link>
-            { freeShipping && (<span data-testid="free-shipping">FRETE GRÁTIS</span>) }
+            <img
+              src={ product.thumbnail }
+              alt={ product.title }
+            />
             <div
-              className="button-container"
+              className="product-info"
             >
-              <button
-                id={ product.id }
-                type="button"
-                className="add-cart-button"
-                data-testid="product-add-to-cart"
-                onClick={ () => addToCart(product.id) }
+              <span
+                className="price"
               >
-                Adicionar ao carrinho
-              </button>
+                { product.price
+                  .toLocaleString('pt-BR',
+                    { style: 'currency',
+                      currency: product.currency_id,
+                      minimumFractionDigits: 2 }) }
+              </span>
+              <span
+                className="product-title"
+              >
+                { product.title.length > 85 ? `${product.title.slice(0, 85)}...` : product.title }
+              </span>
+              { freeShipping && (<span data-testid="free-shipping">FRETE GRÁTIS</span>) }
+              <div
+                className="button-container"
+              >
+                <button
+                  id={ product.id }
+                  type="button"
+                  className="add-cart-button"
+                  data-testid="product-add-to-cart"
+                  onClick={ () => addToCart(product.id) }
+                >
+                  Adicionar ao carrinho
+                </button>
 
+              </div>
             </div>
+          </Link>
 
-          </div>
         </div>
       </div>
     );
