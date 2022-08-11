@@ -16,6 +16,7 @@ import './css/App.css';
 import './css/Header.css';
 import './css/Content.css';
 import './css/Navbar.css';
+import './css/Product.css';
 // Icons Imports
 
 class App extends React.Component {

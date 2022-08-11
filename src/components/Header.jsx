@@ -31,7 +31,7 @@ class Header extends Component {
               onChange={ handleChange }
               placeholder="Digite aqui"
               data-testid="query-input"
-              className="search-input"
+              className="search-input input"
               onKeyDown={ searchRequestEnter }
             />
           </label>

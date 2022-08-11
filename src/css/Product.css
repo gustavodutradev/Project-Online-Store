@@ -1,0 +1,124 @@
+.main-product-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-container {
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  width: 70%;
+  margin: 40px 0 0 0;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.photo-and-product {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
+}
+
+.product-image {
+  width: 35%;
+  max-height: 200px;
+  height: 200px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.title-price-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  width: 60%;
+  max-height: 200px;
+  height: 200px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.product-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.product-price {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: sans-serif;
+}
+
+.evaluations-section {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 0 20px 20px 20px;
+}
+
+.evaluations-div {
+  width: 40%;
+  height: 200px;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.evaluations-form {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 55%;
+  height: 200px;
+}
+
+.email-checkbox-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.email-input {
+padding: 5px;
+border-radius: 5px;
+border: 1px solid rgba(0, 0, 0, 0.3);
+width: 300px;
+}
+
+.textarea {
+  resize: none;
+  font-family: sans-serif;
+  text-align: justify;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  height: 80px;
+}
+
+.details-btn {
+  width: 80%;
+  height: 40px;
+}
+
+.evaluation-btn {
+  width: 150px;
+  margin: 0 auto;
+}
+
+.input:hover {
+  background-color: aliceblue;
+}
+
+.label-checkbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1px;
+}

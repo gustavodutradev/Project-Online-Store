@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-max-depth */
+/* eslint-disable max-len */
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
@@ -99,7 +102,7 @@ class Product extends Component {
 
     for (let i = 1; i <= HIGHEST_RATING; i += 1) {
       const thisRadio = (
-        <label key={ i } htmlFor={ i }>
+        <label key={ i } htmlFor={ i } className="label-checkbox">
           <input
             type="radio"
             name="grade"
@@ -115,60 +118,75 @@ class Product extends Component {
     }
 
     return (
-      <div>
-        <img
-          src={ thumbnail }
-          alt={ title }
-          data-testid="product-detail-image"
-        />
-        <p data-testid="product-detail-name">{ title }</p>
-        <p data-testid="product-detail-price">
-          { price }
-        </p>
-        <button
-          id={ id }
-          type="button"
-          data-testid="product-detail-add-to-cart"
-          onClick={ () => addToCartDetails(thisProd) }
-        >
-          🛒
-        </button>
-        <form>
-          <input
-            type="email"
-            data-testid="product-detail-email"
-            name="email"
-            id="email"
-            value={ email }
-            placeholder="Seu e-mail"
-            onChange={ this.handleChange }
-          />
-          { radioInputs }
-          <br />
-          <textarea
-            data-testid="product-detail-evaluation"
-            cols="30"
-            rows="10"
-            name="details"
-            value={ details }
-            placeholder="Faça sua avaliação desse produto!"
-            onChange={ this.handleChange }
-          />
-          <br />
-          <button
-            type="button"
-            data-testid="submit-review-btn"
-            onClick={ () => this.createEvaluation(id) }
-          >
-            Enviar
-          </button>
-        </form>
-        <div>
-          { displayError && (<span data-testid="error-msg">Campos inválidos</span>) }
-        </div>
-        <div>
-          Avaliações:
-          { evaluationsToShow }
+      <div className="main-product-container">
+        <div className="product-container">
+          <section className="photo-and-product">
+            <img
+              src={ thumbnail }
+              alt={ title }
+              data-testid="product-detail-image"
+              className="product-image"
+            />
+            <div className="title-price-button">
+              <p data-testid="product-detail-name" className="product-title">{ title }</p>
+              <p data-testid="product-detail-price" className="product-price">{ `R$ ${price}` }</p>
+              <button
+                id={ id }
+                type="button"
+                data-testid="product-detail-add-to-cart"
+                onClick={ () => addToCartDetails(thisProd) }
+                className="add-cart-button details-btn"
+              >
+                Adicionar ao carrinho
+              </button>
+            </div>
+          </section>
+
+          <section className="evaluations-section">
+            <div className="evaluations-div">
+              Avaliações:
+              { evaluationsToShow }
+            </div>
+
+            <form className="evaluations-form">
+
+              <div className="email-checkbox-div">
+                <input
+                  type="email"
+                  data-testid="product-detail-email"
+                  name="email"
+                  id="email"
+                  value={ email }
+                  placeholder="Seu e-mail"
+                  onChange={ this.handleChange }
+                  className="email-input input"
+                />
+                { radioInputs }
+              </div>
+
+              <textarea
+                data-testid="product-detail-evaluation"
+                cols="30"
+                rows="7"
+                name="details"
+                value={ details }
+                placeholder="Faça sua avaliação desse produto!"
+                onChange={ this.handleChange }
+                className="textarea input"
+              />
+              <button
+                type="button"
+                data-testid="submit-review-btn"
+                onClick={ () => this.createEvaluation(id) }
+                className="add-cart-button evaluation-btn"
+              >
+                Enviar
+              </button>
+            </form>
+            <div>
+              { displayError && (<span data-testid="error-msg">Campos inválidos</span>) }
+            </div>
+          </section>
         </div>
       </div>
     );
