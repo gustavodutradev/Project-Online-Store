@@ -71,17 +71,18 @@ class Product extends Component {
 
   mountElement = (array) => {
     const elements = array.map((each, index) => (
-      <div key={ index }>
-        <div data-testid="review-card-email">
-          { each.email }
+      <div key={ index } className="evaluation">
+        <div className="evaluation-email-grade">
+          <div data-testid="review-card-email" className="evaluation-email">
+            { each.email }
+          </div>
+          <div data-testid="review-card-rating" className="evaluation-grade">
+            { each.grade }
+          </div>
         </div>
-        <div data-testid="review-card-rating">
-          { each.grade }
-        </div>
-        <div data-testid="review-card-evaluation">
+        <div data-testid="review-card-evaluation" className="evaluation-details">
           { each.details }
         </div>
-        <br />
       </div>));
     return elements;
   }
@@ -91,7 +92,8 @@ class Product extends Component {
 
     const { location, addToCartDetails } = this.props;
     const { state: { thisProd } } = location;
-    const { title, thumbnail, price, id } = thisProd;
+    const { title, thumbnail, price, id, shipping } = thisProd;
+    const { free_shipping: freeShipping } = shipping;
 
     let evaluationsToShow = [];
     if (evaluations.length > 0) {
@@ -117,6 +119,8 @@ class Product extends Component {
       radioInputs.push(thisRadio);
     }
 
+    const TITLE_LENGTH = 85;
+
     return (
       <div className="main-product-container">
         <div className="product-container">
@@ -128,8 +132,18 @@ class Product extends Component {
               className="product-image"
             />
             <div className="title-price-button">
-              <p data-testid="product-detail-name" className="product-title">{ title }</p>
-              <p data-testid="product-detail-price" className="product-price">{ `R$ ${price}` }</p>
+              <div className="free-shipping">
+                { freeShipping && (<span data-testid="free-shipping">FRETE GRÁTIS</span>) }
+              </div>
+              <p data-testid="product-detail-name" className="product-title-details">
+                { title.length > TITLE_LENGTH ? `${title.slice(0, TITLE_LENGTH)}...` : title }
+              </p>
+              <p data-testid="product-detail-price" className="product-price-details">
+                { price.toLocaleString('pt-BR',
+                  { style: 'currency',
+                    currency: 'brl',
+                    minimumFractionDigits: 2 }) }
+              </p>
               <button
                 id={ id }
                 type="button"
@@ -144,8 +158,14 @@ class Product extends Component {
 
           <section className="evaluations-section">
             <div className="evaluations-div">
-              Avaliações:
+              { evaluationsToShow.length < 1 && (
+                <span className="evaluation-title">
+                  Este produto ainda não possui avaliações.
+                  <br />
+                  Faça a primeira!
+                </span>) }
               { evaluationsToShow }
+              <span className="white-shadow">______________________________________________</span>
             </div>
 
             <form className="evaluations-form">
@@ -182,10 +202,10 @@ class Product extends Component {
               >
                 Enviar
               </button>
+              <div className="invalid-fields">
+                { displayError && (<span data-testid="error-msg">Campos inválidos</span>) }
+              </div>
             </form>
-            <div>
-              { displayError && (<span data-testid="error-msg">Campos inválidos</span>) }
-            </div>
           </section>
         </div>
       </div>

@@ -48,7 +48,7 @@ class Content extends Component {
                 { product.price
                   .toLocaleString('pt-BR',
                     { style: 'currency',
-                      currency: product.currency_id,
+                      currency: 'brl',
                       minimumFractionDigits: 2 }) }
               </span>
               <span
