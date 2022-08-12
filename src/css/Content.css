@@ -20,6 +20,7 @@
   margin: 12px;
   max-height: 330px;
   max-width: 214px;
+  position: relative;
   transition: 0.8s;
   width: 214px;
 }
@@ -33,9 +34,8 @@
   border-bottom: 1px solid rgba(116, 116, 116, 0.3);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  height: 120px;
-  object-fit: cover;
-  padding: 0 0 18px;
+  height: 140px;
+  object-fit: contain;
   width: 214.5px;
 }
 
@@ -46,6 +46,7 @@
 
 .product-info {
   align-items: flex-start;
+  bottom: 55px;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -82,9 +83,24 @@
 
 .button-container {
   align-items: flex-end;
+  bottom: 20px;
   display: flex;
   justify-content: space-around;
-  padding: 0 0 5px;
-  width: 100%;
+  left: 22px;
+  margin: auto;
+  position: absolute;
+  width: 80%;
 }
 
+.button-container-fake {
+  height: 30px;
+}
+
+.free-shipping-content {
+  position: absolute;
+  text-align: center;
+  right: 15px;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgb(0, 166, 80);
+}

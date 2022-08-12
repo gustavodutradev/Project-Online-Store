@@ -23,9 +23,7 @@ class Content extends Component {
         data-testid="product"
         key={ product.id }
       >
-        <div
-          className="product-card"
-        >
+        <div className="product-card">
           <Link
             to={ {
               pathname: `/product/${product.id}`,
@@ -39,41 +37,41 @@ class Content extends Component {
               src={ product.thumbnail }
               alt={ product.title }
             />
-            <div
-              className="product-info"
-            >
-              <span
-                className="price"
-              >
+            <div className="product-info">
+              <span className="price">
                 { product.price
                   .toLocaleString('pt-BR',
                     { style: 'currency',
                       currency: 'brl',
                       minimumFractionDigits: 2 }) }
               </span>
-              <span
-                className="product-title"
-              >
+              <span className="product-title">
                 { product.title.length > 85 ? `${product.title.slice(0, 85)}...` : product.title }
               </span>
-              { freeShipping && (<span data-testid="free-shipping">FRETE GRÁTIS</span>) }
-              <div
-                className="button-container"
-              >
-                <button
-                  id={ product.id }
-                  type="button"
-                  className="add-cart-button"
-                  data-testid="product-add-to-cart"
-                  onClick={ () => addToCart(product.id) }
+              { freeShipping && (
+                <span
+                  data-testid="free-shipping"
+                  className="free-shipping-content"
                 >
-                  Adicionar ao carrinho
-                </button>
-
-              </div>
+                  FRETE
+                  <br />
+                  GRÁTIS
+                </span>
+              ) }
+              <div className="button-container-fake" />
             </div>
           </Link>
-
+          <div className="button-container">
+            <button
+              id={ product.id }
+              type="button"
+              className="add-cart-button"
+              data-testid="product-add-to-cart"
+              onClick={ () => addToCart(product.id) }
+            >
+              Adicionar ao carrinho
+            </button>
+          </div>
         </div>
       </div>
     );

@@ -62,7 +62,7 @@
 
 .free-shipping {
   bottom: 62px;
-  color: rgb(76, 184, 76);
+  color: rgb(0, 166, 80);
   font-weight: 600;
   position: absolute;
 }
@@ -88,7 +88,6 @@
   color: white;
   font-size: 18px;
   overflow-x: hidden;
-  position: sticky;
   position: sticky;
   scroll-behavior: smooth;
 }
