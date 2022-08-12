@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 // Icons
 import { CgMathPlus, CgMathMinus } from 'react-icons/cg';
-import { FaRegTrashAlt, FaCheck } from 'react-icons/fa';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { BsCartCheck } from 'react-icons/bs';
 
 export default class Carrinho extends Component {
   checkDuplicated = () => {
@@ -137,13 +138,13 @@ export default class Carrinho extends Component {
                 <Link
                   to="/checkout"
                 >
-                  Prosseguir para o pagamento
                   <button
                     data-testid="checkout-products"
                     type="button"
                     className="checkout-btn"
                   >
-                    <FaCheck />
+                    Confirmar carrinho
+                    <BsCartCheck />
                   </button>
                 </Link>
               </div>

@@ -19,7 +19,7 @@
 .cart {
     display: flex;
     border-bottom: 1px solid rgba(0, 0, 0, 0.216);
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-direction: row;
     align-items: center;
     min-width: 550px;
@@ -84,15 +84,15 @@
 
 .checkout-btn {
     background-color: rgb(0, 0, 0, 0);
-    color: #3483fa;
     border: 0;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .checkout-btn:hover {
-    transform: scale(1.2);
+    transform: scale(1.05);
     transition: 0.2s;
+    color: #3483fa;
 }
 
 .quantity {

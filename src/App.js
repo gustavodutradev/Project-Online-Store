@@ -18,6 +18,7 @@ import './css/Content.css';
 import './css/Navbar.css';
 import './css/Product.css';
 import './css/Carrinho.css';
+import './css/Checkout.css';
 // Icons Imports
 
 class App extends React.Component {
