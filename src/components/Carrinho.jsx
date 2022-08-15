@@ -48,85 +48,83 @@ export default class Carrinho extends Component {
               const stock = cartItem.available_quantity;
               return (
                 <div
+                  className="item"
                   key={ cartItem.id }
-                  // className="cart-container"
                 >
+                  <div className="delete-product-container">
+                    <button
+                      type="button"
+                      data-testid="remove-product"
+                      onClick={ () => removeProduct(id) }
+                      className="delete-product-btn"
+                    >
+                      <FaRegTrashAlt />
+                    </button>
+                  </div>
                   <div
-                    className="cart"
+                    className="photo-and-title"
                   >
-                    <div className="delete-product-container">
+                    <div>
+                      <img
+                        src={ thumbnail }
+                        alt={ title }
+                        className="cart-img"
+                      />
+                    </div>
+                    <div
+                      data-testid="shopping-cart-product-name"
+                      className="product-title"
+                    >
+                      { title }
+                    </div>
+
+                  </div>
+                  <div
+                    className="btns-container"
+                  >
+                    <div
+                      className="decrease-btn-container"
+                    >
                       <button
                         type="button"
-                        data-testid="remove-product"
-                        onClick={ () => removeProduct(id) }
-                        className="delete-product-btn"
+                        onClick={ () => updateCartQuantity(id, DECREASE, cartItem) }
+                        data-testid="product-decrease-quantity"
+                        className="decrease-btn"
                       >
-                        <FaRegTrashAlt />
+                        <CgMathMinus />
+                      </button>
+
+                    </div>
+                    <div
+                      className="quantity"
+                      data-testid="shopping-cart-product-quantity"
+                    >
+                      { (getCartItemQuantity(id) > stock ? (
+                        stock
+                      ) : (
+                        getCartItemQuantity(id)
+                      ))}
+                    </div>
+                    <div
+                      className="increase-btn-container"
+                    >
+                      <button
+                        type="button"
+                        onClick={ () => updateCartQuantity(id, INCREASE, cartItem) }
+                        data-testid="product-increase-quantity"
+                        className="increase-btn"
+                      >
+                        <CgMathPlus />
                       </button>
                     </div>
-                    <div
-                      className="photo-and-title"
-                    >
-                      <div
-                        className="cart-img"
-                      >
-                        <img src={ thumbnail } alt={ title } />
-                      </div>
-                      <div
-                        data-testid="shopping-cart-product-name"
-                        className="product-title"
-                      >
-                        { title }
-                      </div>
-
-                    </div>
-                    <div
-                      className="btns-container"
-                    >
-                      <div
-                        className="decrease-btn-container"
-                      >
-                        <button
-                          type="button"
-                          onClick={ () => updateCartQuantity(id, DECREASE, cartItem) }
-                          data-testid="product-decrease-quantity"
-                          className="decrease-btn"
-                        >
-                          <CgMathMinus />
-                        </button>
-
-                      </div>
-                      <div
-                        className="quantity"
-                        data-testid="shopping-cart-product-quantity"
-                      >
-                        { (getCartItemQuantity(id) > stock ? (
-                          stock
-                        ) : (
-                          getCartItemQuantity(id)
-                        ))}
-                      </div>
-                      <div
-                        className="increase-btn-container"
-                      >
-                        <button
-                          type="button"
-                          onClick={ () => updateCartQuantity(id, INCREASE, cartItem) }
-                          data-testid="product-increase-quantity"
-                          className="increase-btn"
-                        >
-                          <CgMathPlus />
-                        </button>
-                      </div>
-                    </div>
-                    <div
-                      className="product-price"
-                    >
-                      { price.toLocaleString('pt-BR',
-                        { style: 'currency',
-                          currency: cartItem.currency_id,
-                          minimumFractionDigits: 2 }) }
-                    </div>
+                  </div>
+                  <div
+                    className="product-price"
+                  >
+                    { (price * getCartItemQuantity(id)).toLocaleString('pt-BR',
+                      { style: 'currency',
+                        currency: cartItem.currency_id,
+                        minimumFractionDigits: 2 }) }
                   </div>
                 </div>
               );
@@ -143,7 +141,8 @@ export default class Carrinho extends Component {
                     type="button"
                     className="checkout-btn"
                   >
-                    Confirmar carrinho
+                    Continuar a compra
+                    { ' ' }
                     <BsCartCheck />
                   </button>
                 </Link>
@@ -151,10 +150,10 @@ export default class Carrinho extends Component {
               <div
                 className="total-price"
               >
-                { totalPrice().toLocaleString('pt-BR',
+                { `Total: ${totalPrice().toLocaleString('pt-BR',
                   { style: 'currency',
                     currency: 'brl',
-                    minimumFractionDigits: 2 }) }
+                    minimumFractionDigits: 2 })}` }
               </div>
             </div>
           </div>

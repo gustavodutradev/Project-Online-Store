@@ -77,7 +77,6 @@
 
 .add-cart-button:hover {
   background-color: rgb(41, 104, 200);
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
   transition: 0.2s;
 }
 

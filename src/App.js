@@ -75,13 +75,17 @@ class App extends React.Component {
       const newArray = cartList.filter((_each, index) => index !== indexOfProd);
       this.setState({
         cartList: newArray,
+      }, () => {
+        this.updateStorage();
       });
       return;
     }
 
     // IF para aumentar
     if (numb > 0) {
-      this.setState({ cartList: [...cartList, cartList[indexOfProd]] });
+      this.setState({ cartList: [...cartList, cartList[indexOfProd]] }, () => {
+        this.updateStorage();
+      });
     }
   }
 
