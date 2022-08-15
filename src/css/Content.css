@@ -97,10 +97,10 @@
 }
 
 .free-shipping-content {
-  position: absolute;
-  text-align: center;
-  right: 15px;
+  color: rgb(0, 166, 80);
   font-size: 10px;
   font-weight: 700;
-  color: rgb(0, 166, 80);
+  position: absolute;
+  right: 15px;
+  text-align: center;
 }
