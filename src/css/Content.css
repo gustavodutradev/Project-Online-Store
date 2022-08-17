@@ -8,13 +8,40 @@
   height: 100%;
 }
 
+.content-page {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.filter-bar {
+  width: 90%;
+  font-size: 14px;
+  font-weight: 600;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filter-dropdown {
+  text-align: justify;
+  color: rgb(52, 131, 250);
+  font-size: 12px;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  outline: 0;
+  border: 0;
+}
+
 .search-results {
   align-content: flex-start;
   display: flex;
   flex-flow: row wrap;
   height: 100%;
   justify-content: center;
-  padding: 20px 0 0 0;
   width: 100%;
 }
 
@@ -73,7 +100,7 @@
 }
 
 .add-cart-button {
-  background-color: #3483fa;
+  background-color: rgb(52, 131, 250);
   border: none;
   border-radius: 5px;
   color: white;

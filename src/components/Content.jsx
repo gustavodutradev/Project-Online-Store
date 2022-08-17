@@ -81,7 +81,7 @@ class Content extends Component {
 
   render() {
     // Props Import
-    const { searchResult, clickSearch } = this.props;
+    const { searchResult, clickSearch, setFilterSort } = this.props;
     const { results } = searchResult;
 
     const arrayOfItens = results
@@ -91,63 +91,81 @@ class Content extends Component {
     const searchRule = clickSearch;
 
     return (
-      <div className="search-results">
-        {searchRule ? '' : (
-          <div data-testid="home-initial-message" className="front-page">
-            <div className="slideshow">
-              <div className="slideshow-wrapper">
-                <div className="slide">
-                  <img
-                    className="slide-img"
-                    src="https://http2.mlstatic.com/D_NQ_763385-MLA51152952744_082022-OO.webp"
-                    alt="promoção produtos fitness"
-                  />
-                </div>
-                <div className="slide">
-                  <img
-                    className="slide-img"
-                    src="https://http2.mlstatic.com/D_NQ_822357-MLA51147186239_082022-OO.webp"
-                    alt="liquidação produtos tecnológicos"
-                  />
-                </div>
-                <div className="slide">
-                  <img
-                    className="slide-img"
-                    src="https://http2.mlstatic.com/D_NQ_830913-MLA51147387143_082022-OO.webp"
-                    alt="promoção cupom produtos infantis e bebês"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="pros">
-              <div className="pros-card">
-                <span className="pros-icon">
-                  <FaMoneyBillAlt />
-                </span>
-                <span className="pros-title">Pagamento rápido e seguro</span>
-                <span className="pros-subtitle">com ONL Pago</span>
-              </div>
-              <div className="pros-card">
-                <span className="pros-icon">
-                  <FaRegCreditCard />
-                </span>
-                <span className="pros-title">Até 10 parcelas sem juros</span>
-                <span className="pros-subtitle">você podendo mais!</span>
-              </div>
-              <div className="pros-card">
-                <span className="pros-icon">
-                  <FaStopwatch />
-                </span>
-                <span className="pros-title">Pagamento por Pix</span>
-                <span className="pros-subtitle">mais praticidade!</span>
-              </div>
-            </div>
+      <div className="content-page">
+        { !searchRule ? '' : (
+          <div className="filter-bar">
+            Ordenar por:
+            <select
+              id="filters"
+              name="sortId"
+              className="filter-dropdown"
+              onChange={ (event) => setFilterSort(event.target.value) }
+            >
+              <option value="">Mais Relevantes</option>
+              <option value="price_asc">Menor preço</option>
+              <option value="price_desc">Maior preço</option>
+            </select>
           </div>
         )}
-        { clickSearch && (arrayOfItens.length > 0
-          ? arrayOfItens
-          : <div>Nenhum produto foi encontrado</div>) }
+        <div className="search-results">
+          {searchRule ? '' : (
+            <div data-testid="home-initial-message" className="front-page">
+              <div className="slideshow">
+                <div className="slideshow-wrapper">
+                  <div className="slide">
+                    <img
+                      className="slide-img"
+                      src="https://http2.mlstatic.com/D_NQ_763385-MLA51152952744_082022-OO.webp"
+                      alt="promoção produtos fitness"
+                    />
+                  </div>
+                  <div className="slide">
+                    <img
+                      className="slide-img"
+                      src="https://http2.mlstatic.com/D_NQ_822357-MLA51147186239_082022-OO.webp"
+                      alt="liquidação produtos tecnológicos"
+                    />
+                  </div>
+                  <div className="slide">
+                    <img
+                      className="slide-img"
+                      src="https://http2.mlstatic.com/D_NQ_830913-MLA51147387143_082022-OO.webp"
+                      alt="promoção cupom produtos infantis e bebês"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="pros">
+                <div className="pros-card">
+                  <span className="pros-icon">
+                    <FaMoneyBillAlt />
+                  </span>
+                  <span className="pros-title">Pagamento rápido e seguro</span>
+                  <span className="pros-subtitle">com ONL Pago</span>
+                </div>
+                <div className="pros-card">
+                  <span className="pros-icon">
+                    <FaRegCreditCard />
+                  </span>
+                  <span className="pros-title">Até 10 parcelas sem juros</span>
+                  <span className="pros-subtitle">você podendo mais!</span>
+                </div>
+                <div className="pros-card">
+                  <span className="pros-icon">
+                    <FaStopwatch />
+                  </span>
+                  <span className="pros-title">Pagamento por Pix</span>
+                  <span className="pros-subtitle">mais praticidade!</span>
+                </div>
+              </div>
+            </div>
+          )}
+          { clickSearch && (arrayOfItens.length > 0
+            ? arrayOfItens
+            : <div>Nenhum produto foi encontrado</div>) }
+        </div>
       </div>
+
     );
   }
 }
@@ -156,6 +174,7 @@ Content.propTypes = {
   searchResult: PropTypes.instanceOf(Object).isRequired,
   clickSearch: PropTypes.bool.isRequired,
   addToCart: PropTypes.func.isRequired,
+  setFilterSort: PropTypes.func.isRequired,
 };
 
 export default Content;

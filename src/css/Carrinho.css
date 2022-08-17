@@ -15,9 +15,8 @@
   flex-direction: column;
   height: inherit;
   margin: 20px 0;
-  min-width: 550px;
+  min-width: 1000px;
   padding: 0 15px;
-  width: 90%;
 }
 
 .item {
@@ -40,6 +39,7 @@
   margin: 5px 0 5px -5px;
   text-align: justify;
   width: 300px;
+  flex: 1;
 }
 
 .cart-img {
@@ -59,7 +59,8 @@
   font-weight: bolder;
   height: inherit;
   justify-content: center;
-  width: 100px;
+  flex: 1;
+  max-width: 200px;
 }
 
 .btns-container {
@@ -158,4 +159,14 @@
 .empty-cart-message {
   font-size: 18px;
   margin-top: 200px;
+}
+
+@media (max-width: 1100px) {
+  .cart-container {
+    min-width: 80%;
+  }
+
+  .product-price {
+    display: none;
+  }
 }

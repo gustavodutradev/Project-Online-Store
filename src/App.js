@@ -1,9 +1,11 @@
+/* eslint-disable max-lines */
 /* eslint-disable react/no-unused-state */
 // eslint-disable-next-line import/no-named-as-default
 // Main Imports
 import React from 'react';
 // Logic Imports
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import * as api from './services/api';
 // Component Imports
 import Carrinho from './components/Carrinho';
@@ -27,12 +29,15 @@ import './css/Footer.css';
 class App extends React.Component {
   state = {
     searchInput: '',
+    categoryId: '',
+    sortId: '',
     clickSearch: false,
     searchResult: {
       results: [],
     },
     cartList: JSON.parse(localStorage.getItem('cart')) || [],
     redirect: false,
+    statusStock: false,
   }
 
   handleChange = ({ target }) => {
@@ -71,7 +76,6 @@ class App extends React.Component {
 
     // Pega um dos itens do carrinho
     const indexOfProd = cartList.lastIndexOf(obj);
-    console.log(indexOfProd);
 
     // IF para reduzir
     if (numb < 0 && thisProdList.length > 1) {
@@ -86,6 +90,13 @@ class App extends React.Component {
 
     // IF para aumentar
     if (numb > 0) {
+      if (obj.available_quantity <= thisProdList.length) {
+        console.log('oi');
+        this.setState({
+          statusStock: true,
+        });
+        return;
+      }
       this.setState({ cartList: [...cartList, cartList[indexOfProd]] }, () => {
         this.updateStorage();
       });
@@ -119,7 +130,8 @@ class App extends React.Component {
 
   searchRequest = async () => {
     const { searchInput } = this.state;
-    const request = await api.getProductsFromCategoryAndQuery('', searchInput);
+    const request = await api
+      .getProductsFromCategoryAndQuery('', searchInput, '');
 
     this.setState({
       searchResult: request,
@@ -144,6 +156,30 @@ class App extends React.Component {
     }
   }
 
+  setFilterCategory = async (categoryId) => {
+    const { searchInput, sortId } = this.state;
+    const request = await api
+      .getProductsFromCategoryAndQuery(categoryId, searchInput, sortId);
+
+    this.setState({
+      searchResult: request,
+      clickSearch: true,
+      categoryId,
+    });
+  }
+
+  setFilterSort = async (sortId) => {
+    const { searchInput, categoryId } = this.state;
+    const request = await api
+      .getProductsFromCategoryAndQuery(categoryId, searchInput, sortId);
+
+    this.setState({
+      searchResult: request,
+      clickSearch: true,
+      sortId,
+    });
+  }
+
   totalPrice = () => {
     const { cartList } = this.state;
     const pricesArray = cartList.map((cartItem) => {
@@ -151,16 +187,6 @@ class App extends React.Component {
       return price;
     });
     return pricesArray.reduce((acc, curr) => acc + curr, 0);
-  }
-
-  setFilterCategory = async (categoryId) => {
-    const { searchInput } = this.state;
-    const request = await api.getProductsFromCategoryAndQuery(categoryId, searchInput);
-
-    this.setState({
-      searchResult: request,
-      clickSearch: true,
-    });
   }
 
   render() {
@@ -188,6 +214,7 @@ class App extends React.Component {
                 searchResult={ searchResult }
                 clickSearch={ clickSearch }
                 addToCart={ this.addToCart }
+                setFilterSort={ this.setFilterSort }
               />
             </Route>
             <Route

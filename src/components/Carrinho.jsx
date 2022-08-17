@@ -35,6 +35,8 @@ export default class Carrinho extends Component {
     const INCREASE = 1;
     const itemsToShow = this.checkDuplicated();
 
+    const MAX_SIZE_TITLE = 110;
+
     return (
       <div
         className="container"
@@ -75,7 +77,9 @@ export default class Carrinho extends Component {
                       data-testid="shopping-cart-product-name"
                       className="product-title"
                     >
-                      { title }
+                      { title.length > MAX_SIZE_TITLE
+                        ? `${title.slice(0, MAX_SIZE_TITLE)}...`
+                        : title }
                     </div>
 
                   </div>

@@ -218,8 +218,7 @@ input[ type = 'radio' ] {
   background-color: rgb(241, 241, 241);
   width: 40%;
   min-height: 450px;
-  margin: 20px auto;
-  margin-right: 20px
+  margin: 20px 20px 0 0;
 }
 
 .cart-product {
@@ -242,6 +241,7 @@ input[ type = 'radio' ] {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
+  flex: 1;
 }
 
 .title-product {
@@ -293,9 +293,18 @@ input[ type = 'radio' ] {
 
   .checkout-form {
     width: 100%;
+    order: 2;
+  }
+
+  .phantom-div {
+    flex: 0
   }
 
   .purchase-summary {
-    width: 100%;
+    width: 90%;
+    margin: inherit auto auto;
+    min-height: 200px;
+    margin: 20px auto 0 auto;
+    order: 1;
   }
 }
