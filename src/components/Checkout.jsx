@@ -71,6 +71,8 @@ export default class Checkout extends Component {
       const itemsToShow = this.checkDuplicated();
       const { validateFields } = this.state;
       const { getCartItemQuantity, totalPrice } = this.props;
+      const MAX_SIZE_TITLE = 50;
+
       return (
         <div className="checkout-page">
           <div className="checkout-container">
@@ -231,37 +233,48 @@ export default class Checkout extends Component {
             <div
               className="purchase-summary"
             >
-              <p>Resumo da compra</p>
+              <span className="checkout-title">Resumo da Compra:</span>
               <div>
                 { itemsToShow.map((item) => {
                   const { id, price, thumbnail, title } = item;
                   return (
-                    <div key={ id }>
-                      <p>{ title }</p>
+                    <div key={ id } className="cart-product">
                       <img
                         src={ thumbnail }
                         alt={ title }
+                        className="img-product"
                       />
-                      <span>
-                        { price.toLocaleString('pt-BR',
+                      <div className="qtd-title-product">
+                        <span className="title-product">
+                          { title.length > MAX_SIZE_TITLE
+                            ? `${title.slice(0, MAX_SIZE_TITLE)}...`
+                            : title }
+                        </span>
+                        <span className="qtd-product">
+                          { `Quantidade: ${getCartItemQuantity(id)}` }
+                        </span>
+                      </div>
+                      <span className="summary-price">
+                        { (price * getCartItemQuantity(id)).toLocaleString('pt-BR',
                           { style: 'currency',
                             currency: 'brl',
                             minimumFractionDigits: 2 }) }
-                      </span>
-                      <span>
-                        Quantidade:
-                        { getCartItemQuantity(id) }
                       </span>
                     </div>
                   );
                 })}
               </div>
-              <div>
-                Total:
-                { totalPrice().toLocaleString('pt-BR',
-                  { style: 'currency',
-                    currency: 'brl',
-                    minimumFractionDigits: 2 }) }
+              <div className="phantom-div" />
+              <div className="cart-total-checkout">
+                <span className="total-text-checkout">
+                  Total:
+                </span>
+                <span className="total-price-checkout">
+                  { totalPrice().toLocaleString('pt-BR',
+                    { style: 'currency',
+                      currency: 'brl',
+                      minimumFractionDigits: 2 }) }
+                </span>
               </div>
             </div>
             {/* <Link
