@@ -1,11 +1,9 @@
-/* eslint-disable no-magic-numbers */
-/* eslint-disable max-len */
-/* eslint-disable react/jsx-max-depth */
-/* eslint-disable no-unused-vars */
 // Main Imports
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+// ICons Import
+import { FaStopwatch, FaRegCreditCard, FaMoneyBillAlt } from 'react-icons/fa';
 
 class Content extends Component {
   findThisProd = (id) => {
@@ -18,6 +16,7 @@ class Content extends Component {
     const { addToCart } = this.props;
     const { shipping } = product;
     const { free_shipping: freeShipping } = shipping;
+    const MAX_SIZE_TITLE = 85;
     return (
       <div
         data-testid="product"
@@ -46,7 +45,9 @@ class Content extends Component {
                       minimumFractionDigits: 2 }) }
               </span>
               <span className="product-title">
-                { product.title.length > 85 ? `${product.title.slice(0, 85)}...` : product.title }
+                { product.title.length > MAX_SIZE_TITLE
+                  ? `${product.title.slice(0, MAX_SIZE_TITLE)}...`
+                  : product.title }
               </span>
               { freeShipping && (
                 <span
@@ -91,8 +92,55 @@ class Content extends Component {
     return (
       <div className="search-results">
         {searchRule ? '' : (
-          <div data-testid="home-initial-message">
-            Digite algum termo de pesquisa ou escolha uma categoria.
+          <div data-testid="home-initial-message" className="front-page">
+            <div className="slideshow">
+              <div className="slideshow-wrapper">
+                <div className="slide">
+                  <img
+                    className="slide-img"
+                    src="https://http2.mlstatic.com/D_NQ_763385-MLA51152952744_082022-OO.webp"
+                    alt="promoção produtos fitness"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    className="slide-img"
+                    src="https://http2.mlstatic.com/D_NQ_822357-MLA51147186239_082022-OO.webp"
+                    alt="liquidação produtos tecnológicos"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    className="slide-img"
+                    src="https://http2.mlstatic.com/D_NQ_830913-MLA51147387143_082022-OO.webp"
+                    alt="promoção cupom produtos infantis e bebês"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="pros">
+              <div className="pros-card">
+                <span className="pros-icon">
+                  <FaMoneyBillAlt />
+                </span>
+                <span className="pros-title">Pagamento rápido e seguro</span>
+                <span className="pros-subtitle">com ONL Pago</span>
+              </div>
+              <div className="pros-card">
+                <span className="pros-icon">
+                  <FaRegCreditCard />
+                </span>
+                <span className="pros-title">Até 10 parcelas sem juros</span>
+                <span className="pros-subtitle">você podendo mais!</span>
+              </div>
+              <div className="pros-card">
+                <span className="pros-icon">
+                  <FaStopwatch />
+                </span>
+                <span className="pros-title">Pagamento por Pix</span>
+                <span className="pros-subtitle">mais praticidade!</span>
+              </div>
+            </div>
           </div>
         )}
         { clickSearch && (arrayOfItens.length > 0

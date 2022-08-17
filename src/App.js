@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unused-state */
+// eslint-disable-next-line import/no-named-as-default
 // Main Imports
 import React from 'react';
 // Logic Imports
@@ -11,6 +12,7 @@ import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Product from './components/Product';
 import Checkout from './components/Checkout';
+import Footer from './components/Footer';
 // CSS Import
 import './css/App.css';
 import './css/Header.css';
@@ -19,6 +21,7 @@ import './css/Navbar.css';
 import './css/Product.css';
 import './css/Carrinho.css';
 import './css/Checkout.css';
+import './css/Footer.css';
 // Icons Imports
 
 class App extends React.Component {
@@ -165,16 +168,16 @@ class App extends React.Component {
 
     return (
       <BrowserRouter>
-        <div>
+        <div className="page-body">
           <Header
             handleChange={ this.handleChange }
             searchRequest={ this.searchRequest }
             searchRequestEnter={ this.searchRequestEnter }
             cartList={ cartList }
           />
+
           { redirect && <Redirect to="/" /> }
-        </div>
-        <div className="page-body">
+
           <Switch>
             <Route exact path="/">
               <Navbar
@@ -220,6 +223,8 @@ class App extends React.Component {
               ) }
             />
           </Switch>
+
+          <Footer />
         </div>
       </BrowserRouter>
     );

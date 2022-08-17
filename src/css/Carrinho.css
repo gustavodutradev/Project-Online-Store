@@ -2,6 +2,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .cart-container {
@@ -16,7 +17,7 @@
   margin: 20px 0;
   min-width: 550px;
   padding: 0 15px;
-  width: 70%;
+  width: 90%;
 }
 
 .item {
@@ -64,8 +65,11 @@
 .btns-container {
   align-items: center;
   display: flex;
+  padding: 5px;
   gap: 5px;
   height: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
 }
 
 .btns-container button {
@@ -96,6 +100,7 @@
   cursor: pointer;
   font-size: 15px;
   padding-top: 4px;
+  margin-left: 20px;
 }
 
 .delete-product-btn:hover {
@@ -133,6 +138,8 @@
   font-weight: bold;
   justify-content: center;
   width: 25px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-left: 1px solid rgba(0, 0, 0, 0.2);;
 }
 
 .cart-footer {

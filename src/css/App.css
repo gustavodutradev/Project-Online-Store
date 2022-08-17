@@ -17,5 +17,7 @@ a {
 
 .page-body {
   display: flex;
+  height: 100vh;
+  justify-content: flex-start;
   flex-flow: column nowrap;
 }
