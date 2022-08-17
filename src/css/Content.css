@@ -40,12 +40,12 @@
   transition: 0.8s;
 }
 
-.product-card img {
+.product-img {
   border-bottom: 1px solid rgba(116, 116, 116, 0.3);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   height: 140px;
-  object-fit: contain;
+  object-fit: cover;
   width: 214.5px;
 }
 

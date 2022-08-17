@@ -4,8 +4,8 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-
-const HIGHEST_RATING = 5;
+import { Rating } from 'react-simple-star-rating';
+import { FaStar } from 'react-icons/fa';
 
 class Product extends Component {
   state = {
@@ -49,7 +49,7 @@ class Product extends Component {
     this.setState({
       displayError: false,
       email: '',
-      grade: '',
+      grade: 0,
       details: '',
       evaluations: newEvaluationList,
     });
@@ -59,36 +59,54 @@ class Product extends Component {
     this.setState({
       displayError: false,
     });
-
-    const { name } = target;
-    const value = target.type === 'radio' ? target.id : target.value;
+    const { name, value } = target;
     this.setState({
       [name]: value,
+    });
+  }
+
+  ratingChange = (newRating) => {
+    const DIVISION = 20;
+    this.setState({
+      displayError: false,
+      grade: newRating / DIVISION,
     });
   }
 
   isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
   mountElement = (array) => {
-    const elements = array.map((each, index) => (
-      <div key={ index } className="evaluation">
-        <div className="evaluation-email-grade">
-          <div data-testid="review-card-email" className="evaluation-email">
-            { each.email }
+    const elements = array.map((each, index) => {
+      const numberOfStars = [];
+      const MAX_GRADE = 5;
+      for (let i = 1; i <= MAX_GRADE; i += 1) {
+        if (each.grade >= i) {
+          numberOfStars.push(<span className="active-star"><FaStar /></span>);
+        }
+        if (each.grade < i) {
+          numberOfStars.push(<span className="non-active-star"><FaStar /></span>);
+        }
+      }
+      return (
+        <div key={ index } className="evaluation">
+          <div className="evaluation-email-grade">
+            <div data-testid="review-card-email" className="evaluation-email">
+              { each.email }
+            </div>
+            <div data-testid="review-card-rating" className="evaluation-grade">
+              <span>{ numberOfStars }</span>
+            </div>
           </div>
-          <div data-testid="review-card-rating" className="evaluation-grade">
-            { each.grade }
+          <div data-testid="review-card-evaluation" className="evaluation-details">
+            { each.details }
           </div>
-        </div>
-        <div data-testid="review-card-evaluation" className="evaluation-details">
-          { each.details }
-        </div>
-      </div>));
+        </div>);
+    });
     return elements;
   }
 
   render() {
-    const { evaluations, email, details, displayError } = this.state;
+    const { evaluations, email, details, displayError, grade } = this.state;
 
     const { location, addToCartDetails } = this.props;
     const { state: { thisProd } } = location;
@@ -98,25 +116,6 @@ class Product extends Component {
     let evaluationsToShow = [];
     if (evaluations.length > 0) {
       evaluationsToShow = this.mountElement(evaluations);
-    }
-
-    const radioInputs = [];
-
-    for (let i = 1; i <= HIGHEST_RATING; i += 1) {
-      const thisRadio = (
-        <label key={ i } htmlFor={ i } className="label-checkbox">
-          <input
-            type="radio"
-            name="grade"
-            id={ i }
-            data-testid={ `${i}-rating` }
-            onChange={ this.handleChange }
-          />
-          { i }
-        </label>
-
-      );
-      radioInputs.push(thisRadio);
     }
 
     const TITLE_LENGTH = 85;
@@ -181,7 +180,14 @@ class Product extends Component {
                   onChange={ this.handleChange }
                   className="email-input input"
                 />
-                { radioInputs }
+                <Rating
+                  onClick={ this.ratingChange }
+                  size={ 25 }
+                  initialValue={ 0 }
+                  fillColor="#ffe759"
+                  emptyColor="#808080"
+                  transition={ 0.2 }
+                />
               </div>
 
               <textarea

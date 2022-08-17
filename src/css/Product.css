@@ -12,7 +12,6 @@
   border-radius: 5px;
   box-shadow: 0 5px 20px 10px rgba(0, 0, 0, 0.2);
   margin: 20px 0 0;
-  min-width: 550px;
   width: 90%;
 }
 
@@ -28,7 +27,6 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   height: 200px;
-  max-height: 200px;
   object-fit: cover;
   width: 35%;
 }
@@ -110,9 +108,10 @@
 .email-checkbox-div {
   align-items: center;
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
   justify-content: space-between;
   margin: 0 20px;
+  flex: 1;
 }
 
 .email-input {
@@ -159,14 +158,6 @@
   background-color: aliceblue;
 }
 
-.label-checkbox {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 1px;
-}
-
 .invalid-fields {
   bottom: 32px;
   color: red;
@@ -207,7 +198,19 @@
   width: 100%;
 }
 
+.active-star {
+  color: rgb(255, 231, 89);
+}
+
+.non-active-star {
+  color: rgb(128, 128, 128);
+}
+
 .evaluation-details {
   font-size: 14px;
   font-style: italic;
+}
+
+@media (max-width: 685px) {
+
 }

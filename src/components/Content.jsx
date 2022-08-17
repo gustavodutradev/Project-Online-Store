@@ -35,6 +35,7 @@ class Content extends Component {
             <img
               src={ product.thumbnail }
               alt={ product.title }
+              className="product-img"
             />
             <div className="product-info">
               <span className="price">
