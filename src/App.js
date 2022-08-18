@@ -5,7 +5,6 @@
 import React from 'react';
 // Logic Imports
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
 import * as api from './services/api';
 // Component Imports
 import Carrinho from './components/Carrinho';
