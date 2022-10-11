@@ -1,11 +1,10 @@
-/* eslint-disable max-lines */
-/* eslint-disable react/no-unused-state */
-// eslint-disable-next-line import/no-named-as-default
 // Main Imports
 import React from 'react';
+
 // Logic Imports
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import * as api from './services/api';
+
 // Component Imports
 import Carrinho from './components/Carrinho';
 import Content from './components/Content';
@@ -14,6 +13,7 @@ import Header from './components/Header';
 import Product from './components/Product';
 import Checkout from './components/Checkout';
 import Footer from './components/Footer';
+
 // CSS Import
 import './css/App.css';
 import './css/Header.css';
